@@ -7,45 +7,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   
-   <link
-      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
-      rel="stylesheet"
-    />
- 
-    <link rel="stylesheet" href="./css/styles.css" />
   
-    <title>Your Cart</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <link rel="stylesheet" href="./css/styles.css" />
+    <title>Login</title>
   </head>
   <body>
-  
-  <c:set var="x" value="0"></c:set>
-	<c:forEach items="${cartlist }" var="i">
-		<c:set var="x" value="${x+1 }"></c:set>
-	</c:forEach>
-	
     <!-- Navigation -->
     <div class="top-nav">
-        <div class="container d-flex">
-          <p>Order Online Or Call Us: (+91) 9823782891</p>
-          
-        </div>
-      </div>
-      <div class="navigation">
-        <div class="nav-center container d-flex">
+      <div class="container d-flex">
+        <p>Order Online Or Call Us: (+91)982378289</p>
         
-        <a href="Controller?page=index" class="logo"><h1>Online Shop</h1></a>
+      </div>
+    </div>
+    <div class="navigation">
+      <div class="nav-center container d-flex">
+        <a href="Controller?page=index" class="logo"><h1>Shop</h1></a>
 
-          <ul class="nav-list d-flex">
-			
-            <li class="nav-item">
-              <a href="Controller?page=index" class="nav-link">Home</a>
-            </li>
-            <li class="nav-item">
-              <a href="product.jsp" class="nav-link">Products</a>
-            </li>
-            
-                <li class="icons d-flex">
+         <ul class="nav-list d-flex">
+          <li class="nav-item">
+            <a href="Controller?page=index" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="product.jsp" class="nav-link">Products</a>
+          </li>
+          
+          
+               <li class="icons d-flex">
             
              <c:choose>
 				<c:when test="${session == null}">
@@ -123,117 +115,57 @@
           
           </div>
         </div> 
-
-    <!-- Cart Items -->
-    <div class="container cart">
-    
-    <c:choose> 
-		<c:when test="${x == 1}">
-						<h4 style="margin-top: 40px;">My shopping bag(<c:out value="${x}"/> item)</h4>
-						<br>
-		</c:when>
-		<c:when test="${x > 1}">
-						<h4 style="margin-top: 40px;">My shopping bag(<c:out value="${x}"/> items)</h4>
-						<br>
-		</c:when>
-		<c:otherwise >
-				<h4 style="margin-top: 40px;">Your Shopping Bag is Empty</h4>
-				<br>
-		</c:otherwise>
-	
-	</c:choose>
-	
-      <table>
-        <tr>
-          <th>Product</th>
-          
-          <th>SubTotal</th>
-        </tr>
-	 </table>
-	 
-	<div class = "product-container">
-	
-	<c:set var="total" value="0"></c:set>
-		<c:forEach items="${cartlist }" var="i">
-			<c:forEach items="${list }" var="Product">
-			
-				<c:if test="${i == Product.getId() }">
-				
-				<c:set var="total" value="${total + Product.getPrice() }"></c:set>
-				
- 		<table class="cart-content">
-			<tr>
-				<td>
-					<div class="cart-info">
-						<img src="${Product.getImage()}" alt="" />
-						<div>
-							<p>${Product.getName()}</p>
-							<span >Rs. ${Product.getPrice()}</span> <br /> 
-							<a href="Controller?page=remove&id=<c:out value="${Product.getId()}"/>"><i class="bx bx-trash-alt cart-remove"></i></a>
-						</div>
-					</div>
-				</td>
-	
-				<td class="cart-price">Rs. ${Product.getPrice()}</td>
-			</tr>
-		</table>
-		
-		</c:if>
-			</c:forEach>
-		</c:forEach>
-	
+    <!-- Login -->
+    <div class="container">
+      <div class="login-form">
+        <form method="post" action="Controller">
         
-      <div class="total-price">
-        <table>
-          <tr>
-            <td>Total</td>
-            <td  class="total-price">Rs.${ total}</td>
-          </tr>
-        </table>
-       <a href="Controller?page=success"  >
-       <input type="button" value="Proceed To Checkout" class="checkout btn" style="border:none; outline:none;margin:0; padding:5px; color:white; font-size:12px; "></a>
-      </div>   
-      </div> 
-    </div>    
+        <input type="hidden" name="page" value="login-form">
+        
+        <font color="#F24638"><c:out value="${msg }"></c:out></font>
+        <br>
+        
+          <h1>Login</h1>
+          <p>
+            Already have an account? Login in or
+            <a href="Controller?page=sign-up">Sign Up</a>
+          </p>
 
-    <!-- Latest Products -->
-    <section class="section featured">
-      <div class="top container">
-        <h1>Latest Products</h1>
-        <a href="product.html" class="view-more">View more</a>
+
+          <label for="username">Username</label>
+          <input type="text" placeholder="Enter Username" name="username" value="<c:out value="${username }"></c:out>" required />
+
+          <label for="psw">Password</label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            name="password"
+            required
+          />
+
+
+          <label>
+            <input
+              type="checkbox"
+              checked="checked"
+              name="remember"
+              style="margin-bottom: 15px"
+            />
+            Remember me
+          </label>
+
+          <p>
+            By creating an account you agree to our
+            <a href="#">Terms & Privacy</a>.
+          </p>
+
+          <div class="buttons">
+            
+            <button type="submit" name="login" class="signupbtn">Login</button>
+          </div>
+        </form>
       </div>
-      <div class="product-center container">
-      
- <c:forEach items="${list }" var="product">
-
-				<c:if test="${product.getFeatured() == 'yes' }">
-
-					<div class="product-item ">
-						<div class="overlay">
-							<a href="${product.getName() }.jsp"  class="product-thumb"> <img
-								src="${product.getImage() }" alt="" />
-							</a>
-						</div>
-						<div class="product-info">
-							 <a href="${product.getName() }.jsp"><c:out
-									value="${product.getName() }"></c:out></a>
-							<h4>
-								<c:out value="Rs.${ product.getPrice() }"></c:out>
-							</h4>
-						</div>
-						<ul class="icons">
-							
-							<li><a
-								href="Controller?page=addtocart&action=cart&id=<c:out value="${product.getId()}"/>"><i
-									class="bx bx-cart add-cart"></i></a></li>
-						</ul>
-					</div>
-
-				</c:if>
-
-			</c:forEach>
-      </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -262,10 +194,6 @@
       </div>
     </footer>
 
-
-
-     
     <script src="./js/index.js"></script>
-    
   </body>
 </html>

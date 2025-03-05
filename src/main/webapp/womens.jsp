@@ -7,28 +7,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   
-   <link
-      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+  
+    <link
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
     />
- 
+
     <link rel="stylesheet" href="./css/styles.css" />
-  
-    <title>Your Cart</title>
+    
+    <title>Women's Products</title>
   </head>
+
   <body>
-  
-  <c:set var="x" value="0"></c:set>
+
+	<c:set var="x" value="0"></c:set>
 	<c:forEach items="${cartlist }" var="i">
 		<c:set var="x" value="${x+1 }"></c:set>
 	</c:forEach>
-	
-    <!-- Navigation -->
+
+	<!-- Navigation -->
     <div class="top-nav">
         <div class="container d-flex">
           <p>Order Online Or Call Us: (+91) 9823782891</p>
-          
+          <ul class="d-flex">
+            
+          </ul>
         </div>
       </div>
       <div class="navigation">
@@ -45,7 +48,8 @@
               <a href="product.jsp" class="nav-link">Products</a>
             </li>
             
-                <li class="icons d-flex">
+            
+               <li class="icons d-flex">
             
              <c:choose>
 				<c:when test="${session == null}">
@@ -124,114 +128,56 @@
           </div>
         </div> 
 
-    <!-- Cart Items -->
-    <div class="container cart">
-    
-    <c:choose> 
-		<c:when test="${x == 1}">
-						<h4 style="margin-top: 40px;">My shopping bag(<c:out value="${x}"/> item)</h4>
-						<br>
-		</c:when>
-		<c:when test="${x > 1}">
-						<h4 style="margin-top: 40px;">My shopping bag(<c:out value="${x}"/> items)</h4>
-						<br>
-		</c:when>
-		<c:otherwise >
-				<h4 style="margin-top: 40px;">Your Shopping Bag is Empty</h4>
-				<br>
-		</c:otherwise>
-	
-	</c:choose>
-	
-      <table>
-        <tr>
-          <th>Product</th>
-          
-          <th>SubTotal</th>
-        </tr>
-	 </table>
-	 
-	<div class = "product-container">
-	
-	<c:set var="total" value="0"></c:set>
-		<c:forEach items="${cartlist }" var="i">
-			<c:forEach items="${list }" var="Product">
-			
-				<c:if test="${i == Product.getId() }">
-				
-				<c:set var="total" value="${total + Product.getPrice() }"></c:set>
-				
- 		<table class="cart-content">
-			<tr>
-				<td>
-					<div class="cart-info">
-						<img src="${Product.getImage()}" alt="" />
-						<div>
-							<p>${Product.getName()}</p>
-							<span >Rs. ${Product.getPrice()}</span> <br /> 
-							<a href="Controller?page=remove&id=<c:out value="${Product.getId()}"/>"><i class="bx bx-trash-alt cart-remove"></i></a>
-						</div>
-					</div>
-				</td>
-	
-				<td class="cart-price">Rs. ${Product.getPrice()}</td>
-			</tr>
-		</table>
+    <!-- All Products -->
+    <section class="section all-products" id="products">
+		<div class="top container">
 		
-		</c:if>
-			</c:forEach>
-		</c:forEach>
-	
-        
-      <div class="total-price">
-        <table>
-          <tr>
-            <td>Total</td>
-            <td  class="total-price">Rs.${ total}</td>
-          </tr>
-        </table>
-       <a href="Controller?page=success"  >
-       <input type="button" value="Proceed To Checkout" class="checkout btn" style="border:none; outline:none;margin:0; padding:5px; color:white; font-size:12px; "></a>
-      </div>   
-      </div> 
-    </div>    
+			<a href="Controller?page=product" class="list-group-item">
+				<span style="font-size: 30px;">Women's Products</span>
+			</a>
 
-    <!-- Latest Products -->
-    <section class="section featured">
-      <div class="top container">
-        <h1>Latest Products</h1>
-        <a href="product.html" class="view-more">View more</a>
-      </div>
-      <div class="product-center container">
-      
- <c:forEach items="${list }" var="product">
+			
+		</div>
 
-				<c:if test="${product.getFeatured() == 'yes' }">
+		<div class="product-center">
+
+			<c:forEach items="${list }" var="product">
+
+				<c:if test="${product.getCategory() == 'women' }">
 
 					<div class="product-item ">
 						<div class="overlay">
-							<a href="${product.getName() }.jsp"  class="product-thumb"> <img
+							<a href="" class="product-thumb"> <img
 								src="${product.getImage() }" alt="" />
 							</a>
 						</div>
 						<div class="product-info">
-							 <a href="${product.getName() }.jsp"><c:out
+							<span>WOMEN'S CLOTHES</span> <a href="${product.getName() }.jsp"><c:out
 									value="${product.getName() }"></c:out></a>
 							<h4>
 								<c:out value="Rs.${ product.getPrice() }"></c:out>
 							</h4>
 						</div>
 						<ul class="icons">
-							
-							<li><a
-								href="Controller?page=addtocart&action=cart&id=<c:out value="${product.getId()}"/>"><i
-									class="bx bx-cart add-cart"></i></a></li>
+						<li>
+							<a href="Controller?page=addtocart&action=women&id=<c:out value="${product.getId()}"/>">
+								<i class="bx bx-cart add-cart"></i></a>
+								</li>
 						</ul>
 					</div>
 
 				</c:if>
 
 			</c:forEach>
+
+		</div>
+
+    </section>
+    
+    <section class="pagination">
+      <div class="container">
+       <a href="product.jsp"> <span>1</span></a> <a href="Controller?page=women"><span>2</span></a> <a href="mens.jsp"><span>3</span></a> <span>4</span>
+        <a href="mens.jsp"><span><i class="bx bx-right-arrow-alt"></i></span></a>
       </div>
     </section>
 
@@ -242,8 +188,6 @@
           <h4>INFORMATION</h4>
           <a href="">About us</a>
           <a href="">Contact Us</a>
-          <a href="">Term & Conditions</a>
-          <a href="">Shipping Guide</a>
         </div>
         <div class="col d-flex">
           <h4>USEFUL LINK</h4>
@@ -261,11 +205,7 @@
         </div>
       </div>
     </footer>
-
-
-
-     
-    <script src="./js/index.js"></script>
     
+    <script src="./js/index.js"></script>
   </body>
 </html>
